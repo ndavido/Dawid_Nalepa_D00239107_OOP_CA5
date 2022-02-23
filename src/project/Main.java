@@ -3,6 +3,12 @@ package project;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+	    Main app = new Main();
+        app.start();
     }
+
+    public void start(){
+        System.out.println("Push and Commit Test");
+    }
+
 }
