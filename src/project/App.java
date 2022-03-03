@@ -48,7 +48,6 @@ public class App {
                         displayTreeMap();
                         break;
                     case EXIT:
-                        System.out.println("Exit Menu option chosen");
                         break;
                     default:
                         System.out.print("Invalid option - please enter number in range");
@@ -65,51 +64,76 @@ public class App {
     }
 
     public void displayArrayList(){
-        ArrayList<Menu> order = new ArrayList<>();
+        ArrayList<Menu> menuArray = new ArrayList<>();
 
-        order.add(new Menu("Mushroom Soup","Medium",1,15.99));
-        order.add(new Menu("Spaghetti","Small",2,18.50));
-        order.add(new Menu("Mashed Potatoes","Large",1,20.99));
-        order.add(new Menu("Cranberry Sorbet","Medium",1,9.99));
-        order.add(new Menu("Warm Ice-Cream","Large",3,14.99));
-        order.add(new Menu("Lasagna","Small",1,17.99));
-        order.add(new Menu("Caesar Salad","Small",1,8.99));
-        order.add(new Menu("Chicken Tika Masala","Medium",1,15.99));
-        order.add(new Menu("Smoked Salmon","Small",1,25.99));
-        order.add(new Menu("Steak","Large",1,59.99));
+        menuArray.add(new Menu("Mushroom Soup","Medium",1,15.99));
+        menuArray.add(new Menu("Spaghetti","Small",2,18.50));
+        menuArray.add(new Menu("Mashed Potatoes","Large",1,20.99));
+        menuArray.add(new Menu("Cranberry Sorbet","Medium",1,9.99));
+        menuArray.add(new Menu("Warm Ice-Cream","Large",3,14.99));
+        menuArray.add(new Menu("Lasagna","Small",1,17.99));
+        menuArray.add(new Menu("Caesar Salad","Small",1,8.99));
+        menuArray.add(new Menu("Chicken Tika Masala","Medium",1,15.99));
+        menuArray.add(new Menu("Smoked Salmon","Small",1,25.99));
+        menuArray.add(new Menu("Steak","Large",1,59.99));
 
-        for(Menu i : order){
+        for(Menu i : menuArray){
             System.out.println(i);
         }
     }
 
     public void displayHashMap() {
-        Map<Long, Menu> menuMap = new HashMap<>();
+        Scanner kb = new Scanner(System.in);
+        Map<Integer, Menu> menuMap = new HashMap<>();
 
-        menuMap.put(100001L,new Menu("Mushroom Soup","Medium",1,15.99));
-        menuMap.put(100002L,new Menu("Spaghetti","Small",2,18.50));
-        menuMap.put(100003L,new Menu("Mashed Potatoes","Large",1,20.99));
-        menuMap.put(100004L,new Menu("Cranberry Sorbet","Medium",1,9.99));
-        menuMap.put(100005L,new Menu("Warm Ice-Cream","Large",3,14.99));
-        menuMap.put(100006L,new Menu("Lasagna","Small",1,17.99));
-        menuMap.put(100007L,new Menu("Caesar Salad","Small",1,8.99));
-        menuMap.put(100008L,new Menu("Chicken Tika Masala","Medium",1,15.99));
-        menuMap.put(100009L,new Menu("Smoked Salmon","Small",1,25.99));
-        menuMap.put(100010L,new Menu("Steak","Large",1,59.99));
+        menuMap.put(1,new Menu("Mushroom Soup","Medium",1,15.99));
+        menuMap.put(2,new Menu("Spaghetti","Small",2,18.50));
+        menuMap.put(3,new Menu("Mashed Potatoes","Large",1,20.99));
+        menuMap.put(4,new Menu("Cranberry Sorbet","Medium",1,9.99));
+        menuMap.put(5,new Menu("Warm Ice-Cream","Large",3,14.99));
+        menuMap.put(6,new Menu("Lasagna","Small",1,17.99));
+        menuMap.put(7,new Menu("Caesar Salad","Small",1,8.99));
+        menuMap.put(8,new Menu("Chicken Tika Masala","Medium",1,15.99));
+        menuMap.put(9,new Menu("Smoked Salmon","Small",1,25.99));
+        menuMap.put(10,new Menu("Steak","Large",1,59.99));
 
-        Set<Long> keySet = menuMap.keySet();
+        System.out.println("Please enter a valid key\nValid key range (100001L - 100010L)");
+        System.out.print("Your choice: ");
+        int key = kb.nextInt();
 
-        for (Long key : keySet) {
-            Menu menu = menuMap.get(key);
-            System.out.println(key + " Name: " + menu.getName()
-                                   + ", Dish Size: " + menu.getDishSize()
-                                   + ", Quantity: " + menu.getQuantity()
-                                   + ", Price: " + menu.getPrice());
+        if(menuMap.containsKey(key)) {
+            System.out.println(menuMap.get(key));
+        }
+        else{
+            System.out.println("menuMap does not contain the key " + key);
         }
     }
 
     public void displayTreeMap() {
 
+        TreeMap<Integer, Menu> menuTreeMap = new TreeMap<>();
+
+        menuTreeMap.put(3,new Menu("Mushroom Soup","Medium",1,15.99));
+        menuTreeMap.put(10,new Menu("Spaghetti","Small",2,18.50));
+        menuTreeMap.put(1,new Menu("Mashed Potatoes","Large",1,20.99));
+        menuTreeMap.put(4,new Menu("Cranberry Sorbet","Medium",1,9.99));
+        menuTreeMap.put(5,new Menu("Warm Ice-Cream","Large",3,14.99));
+        menuTreeMap.put(8,new Menu("Lasagna","Small",1,17.99));
+        menuTreeMap.put(7,new Menu("Caesar Salad","Small",1,8.99));
+        menuTreeMap.put(6,new Menu("Chicken Tika Masala","Medium",1,15.99));
+        menuTreeMap.put(9,new Menu("Smoked Salmon","Small",1,25.99));
+        menuTreeMap.put(2,new Menu("Steak","Large",1,59.99));
+
+        Set<Integer> keySet = menuTreeMap.keySet();
+
+        for (int key : keySet) {
+            Menu menu = menuTreeMap.get(key);
+            System.out.println("Key: " + key +
+                               "{Name = " + menu.getName() +
+                               ", Dish Size = " + menu.getDishSize() +
+                               ", Quantity = " + menu.getQuantity() +
+                               ", Price = " + menu.getPrice() + "}");
+        }
     }
 
 }
