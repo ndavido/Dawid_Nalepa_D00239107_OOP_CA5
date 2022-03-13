@@ -1,0 +1,19 @@
+=======================================
+|Time Complexity for Each of the Tasks|
+=======================================
+
+ArrayList = O(n)
+
+====
+
+HasMap = O(1)
+
+====
+
+TreeMap = O(log(n))
+
+====
+
+Priority Queue = O(1) for Insertion Time
+               = O(n) for Pull Time
+====
