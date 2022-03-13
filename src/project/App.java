@@ -22,14 +22,15 @@ public class App {
         final int ARRAYLIST = 1;
         final int HASHMAP = 2;
         final int TREEMAP = 3;
-        final int PRIORITYQUEUE = 4;
-        final int EXIT = 5;
+        final int PRIORITYQUEUE1 = 4;
+        final int PRIORITYQUEUE2 = 5;
+        final int EXIT = 6;
 
         Scanner keyboard = new Scanner(System.in);
         int option = 0;
         do {
             System.out.println("\n=================================================");
-            System.out.println("(1)ArrayList\n(2)HashMap\n(3)TreeMap\n(4)Priority Queue\n(5)Exit");
+            System.out.println("(1)ArrayList\n(2)HashMap\n(3)TreeMap\n(4)Priority Queue 1\n(5)Priority Queue 2\n(6)Exit");
             System.out.print("\nYour Choice: ");
 
             try {
@@ -49,9 +50,13 @@ public class App {
                         System.out.println("Displaying the populated TreeMap\n");
                         displayTreeMap();
                         break;
-                    case PRIORITYQUEUE:
+                    case PRIORITYQUEUE1:
                         System.out.println("Displaying the populated Priority Queue\n");
                         displayPriorityQueue();
+                        break;
+                    case PRIORITYQUEUE2:
+                        System.out.println("Displaying the populated Priority Queue\n");
+                        displayPriorityQueue2();
                         break;
                     case EXIT:
                         break;
@@ -163,5 +168,26 @@ public class App {
 //        while(!menuPriorityQueue.isEmpty()){
 //            System.out.println(menuPriorityQueue.remove());
 //        }
+    }
+
+    public void displayPriorityQueue2(){
+        PriorityQueue<Menu> menuPriorityQueue = new PriorityQueue<>(new CompareDishNameQuantity());
+
+        menuPriorityQueue.add(new Menu("Mushroom Soup", "Medium",1, 15.99));
+        menuPriorityQueue.add(new Menu("Spaghetti","Small",2,18.50));
+        menuPriorityQueue.add(new Menu("Mashed Potatoes","Large",1,20.99));
+        menuPriorityQueue.add(new Menu("Cranberry Sorbet","Medium",1,9.99));
+        menuPriorityQueue.add(new Menu("Warm Ice-Cream","Large",3,14.99));
+        menuPriorityQueue.add(new Menu("Lasagna","Small",1,17.99));
+        menuPriorityQueue.add(new Menu("Caesar Salad","Small",1,8.99));
+        menuPriorityQueue.add(new Menu("Chicken Tika Masala","Medium",1,15.99));
+        menuPriorityQueue.add(new Menu("Smoked Salmon","Small",1,25.99));
+        menuPriorityQueue.add(new Menu("Steak","Large",1,59.99));
+        menuPriorityQueue.add(new Menu("Warm Ice-Cream","Large",1,14.99));
+
+
+        while(!menuPriorityQueue.isEmpty()){
+            System.out.println(menuPriorityQueue.remove());
+        }
     }
 }
