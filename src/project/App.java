@@ -154,13 +154,16 @@ public class App {
         menuPriorityQueue.add(new Menu("Mashed Potatoes","Large",1,20.99));
         menuPriorityQueue.add(new Menu("Cranberry Sorbet","Medium",1,9.99));
 
-        System.out.println(menuPriorityQueue.poll());
+        menuPriorityQueue.remove("Cranberry Sorbet");
+        System.out.println(menuPriorityQueue.peek() + "\n");
 
         menuPriorityQueue.add(new Menu("Warm Ice-Cream","Large",3,14.99));
 
         while(!menuPriorityQueue.isEmpty()){
             System.out.println(menuPriorityQueue.remove());
         }
+
+        System.out.println(menuPriorityQueue.poll());
     }
 
     public void displayPriorityQueue2(){
