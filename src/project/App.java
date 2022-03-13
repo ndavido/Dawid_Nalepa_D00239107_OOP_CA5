@@ -153,21 +153,14 @@ public class App {
         menuPriorityQueue.add(new Menu("Spaghetti","Small",2,18.50));
         menuPriorityQueue.add(new Menu("Mashed Potatoes","Large",1,20.99));
         menuPriorityQueue.add(new Menu("Cranberry Sorbet","Medium",1,9.99));
-        menuPriorityQueue.add(new Menu("Warm Ice-Cream","Large",3,14.99));
-        menuPriorityQueue.add(new Menu("Lasagna","Small",1,17.99));
-        menuPriorityQueue.add(new Menu("Caesar Salad","Small",1,8.99));
-        menuPriorityQueue.add(new Menu("Chicken Tika Masala","Medium",1,15.99));
-        menuPriorityQueue.add(new Menu("Smoked Salmon","Small",1,25.99));
-        menuPriorityQueue.add(new Menu("Steak","Large",1,59.99));
 
+        System.out.println(menuPriorityQueue.poll());
+
+        menuPriorityQueue.add(new Menu("Warm Ice-Cream","Large",3,14.99));
 
         while(!menuPriorityQueue.isEmpty()){
             System.out.println(menuPriorityQueue.remove());
         }
-//        Iterator<Menu> iterator = menuPriorityQueue.iterator();
-//        while(!menuPriorityQueue.isEmpty()){
-//            System.out.println(menuPriorityQueue.remove());
-//        }
     }
 
     public void displayPriorityQueue2(){
