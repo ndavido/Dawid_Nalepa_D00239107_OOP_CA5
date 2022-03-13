@@ -28,7 +28,8 @@ public class App {
         Scanner keyboard = new Scanner(System.in);
         int option = 0;
         do {
-            System.out.println("\n(1)ArrayList\n(2)HashMap\n(3)TreeMap\n(4)Priority Queue\n(5)Exit");
+            System.out.println("\n=================================================");
+            System.out.println("(1)ArrayList\n(2)HashMap\n(3)TreeMap\n(4)Priority Queue\n(5)Exit");
             System.out.print("\nYour Choice: ");
 
             try {
@@ -141,9 +142,9 @@ public class App {
     }
 
     public void displayPriorityQueue(){
-        PriorityQueue<Menu> menuPriorityQueue = new PriorityQueue<>();
+        PriorityQueue<Menu> menuPriorityQueue = new PriorityQueue<>(new quantityComparator(SortType.Ascending));
 
-        menuPriorityQueue.add(new Menu("Mushroom Soup", "Medium", 1, 15.99));
+        menuPriorityQueue.add(new Menu("Mushroom Soup", "Medium",1, 15.99));
         menuPriorityQueue.add(new Menu("Spaghetti","Small",2,18.50));
         menuPriorityQueue.add(new Menu("Mashed Potatoes","Large",1,20.99));
         menuPriorityQueue.add(new Menu("Cranberry Sorbet","Medium",1,9.99));
@@ -154,9 +155,13 @@ public class App {
         menuPriorityQueue.add(new Menu("Smoked Salmon","Small",1,25.99));
         menuPriorityQueue.add(new Menu("Steak","Large",1,59.99));
 
+
         while(!menuPriorityQueue.isEmpty()){
             System.out.println(menuPriorityQueue.remove());
         }
+//        Iterator<Menu> iterator = menuPriorityQueue.iterator();
+//        while(!menuPriorityQueue.isEmpty()){
+//            System.out.println(menuPriorityQueue.remove());
+//        }
     }
-
 }

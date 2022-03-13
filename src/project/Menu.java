@@ -57,6 +57,4 @@ public class Menu {
                 ", Price = " + price +
                 '}';
     }
-
-
 }
