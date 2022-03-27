@@ -91,7 +91,7 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface{
             }
         } catch (SQLException e)
         {
-            throw new DAOException("findUserByUsernamePassword() " + e.getMessage());
+            throw new DAOException("findMenuByID() " + e.getMessage());
         } finally
         {
             try
@@ -110,7 +110,7 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface{
                 }
             } catch (SQLException e)
             {
-                throw new DAOException("findUserByUsernamePassword() " + e.getMessage());
+                throw new DAOException("findMenuByID() " + e.getMessage());
             }
         }
         return menu;
