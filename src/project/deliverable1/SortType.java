@@ -1,4 +1,4 @@
-package project;
+package project.deliverable1;
 
 public enum SortType
 {

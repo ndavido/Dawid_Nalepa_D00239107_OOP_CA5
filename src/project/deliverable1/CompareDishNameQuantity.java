@@ -1,4 +1,6 @@
-package project;
+package project.deliverable1;
+
+import project.deliverable1.Menu;
 
 import java.util.Comparator;
 

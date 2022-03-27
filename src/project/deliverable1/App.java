@@ -1,4 +1,4 @@
-package project;
+package project.deliverable1;
 
 import java.io.IOException;
 import java.util.*;
