@@ -27,7 +27,8 @@ public class App {
     private void displayMainMenu() throws IOException{
         final int DISPLAY_MENU = 1;
         final int DISPLAY_BY_ID = 2;
-        final int EXIT = 3;
+        final int ADD_MENU_DISH = 3;
+        final int EXIT = 4;
 
         MenuDAOInterface IMenuDao = new MySqlMenuDAO();
 
@@ -38,7 +39,7 @@ public class App {
         int option = 0;
         do {
             System.out.println("\n=================================================");
-            System.out.println("(1)Display Menu\n(2)Find Menu Item by ID\n(3)Exit");
+            System.out.println("(1)Display Menu\n(2)Find Menu Item by ID\n(3)Add Dish to Menu\n(4)Exit");
             System.out.print("\nYour Choice: ");
 
             try {
@@ -49,12 +50,18 @@ public class App {
                     case DISPLAY_MENU:
                         System.out.println("Showing all Menu options\n");
                         List<Menu> menus = null;
+
                         displayMenu(IMenuDao, menus);
                         break;
                     case DISPLAY_BY_ID:
                         System.out.println("Showing Menu option by ID\n");
 
                         displayMenuByID(IMenuDao);
+                        break;
+                    case ADD_MENU_DISH:
+                        System.out.println("Showing Menu option by ID\n");
+
+                        addDishToMenu(IMenuDao);
                         break;
                     case EXIT:
                         break;
@@ -103,5 +110,20 @@ public class App {
             System.out.println("Menu item with such ID not found");
 
         return menu;
+    }
+
+    public void addDishToMenu(MenuDAOInterface IMenuDao) throws DAOException {
+        Scanner kb = new Scanner(System.in);
+
+        System.out.print("Dishes name: ");
+        String dishName = kb.next();
+        System.out.print("\nDish Size: ");
+        String dishSize = kb.next();
+        System.out.print("\nQuantity: ");
+        int quantity = kb.nextInt();
+        System.out.print("\nPrice: ");
+        double price = kb.nextDouble();
+
+        IMenuDao.addMenuDish(dishName, dishSize, quantity, price);
     }
 }
