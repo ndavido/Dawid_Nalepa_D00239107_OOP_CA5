@@ -28,7 +28,8 @@ public class App {
         final int DISPLAY_MENU = 1;
         final int DISPLAY_BY_ID = 2;
         final int ADD_MENU_DISH = 3;
-        final int EXIT = 4;
+        final int DELETE_MENU_DISH = 4;
+        final int EXIT = 5;
 
         MenuDAOInterface IMenuDao = new MySqlMenuDAO();
 
@@ -39,7 +40,7 @@ public class App {
         int option = 0;
         do {
             System.out.println("\n=================================================");
-            System.out.println("(1)Display Menu\n(2)Find Menu Item by ID\n(3)Add Dish to Menu\n(4)Exit");
+            System.out.println("(1)Display Menu\n(2)Find Menu Item by ID\n(3)Add Dish to Menu\n(4)Delete Dish from Menu by ID\n(5)Exit");
             System.out.print("\nYour Choice: ");
 
             try {
@@ -59,9 +60,14 @@ public class App {
                         displayMenuByID(IMenuDao);
                         break;
                     case ADD_MENU_DISH:
-                        System.out.println("Showing Menu option by ID\n");
+                        System.out.println("Showing Add Option\n");
 
                         addDishToMenu(IMenuDao);
+                        break;
+                    case DELETE_MENU_DISH:
+                        System.out.println("Showing Delete Option\n");
+
+                        deleteDishByID(IMenuDao);
                         break;
                     case EXIT:
                         break;
@@ -125,5 +131,14 @@ public class App {
         double price = kb.nextDouble();
 
         IMenuDao.addMenuDish(dishName, dishSize, quantity, price);
+    }
+
+    public void deleteDishByID(MenuDAOInterface IMenuDao) throws DAOException {
+        Scanner kb = new Scanner(System.in);
+
+        System.out.print("\nQuantity: ");
+        int menu_id = kb.nextInt();
+
+        IMenuDao.deleteMenuDishByID(menu_id);
     }
 }
