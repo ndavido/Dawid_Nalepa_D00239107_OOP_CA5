@@ -1,7 +1,7 @@
 package project.deliverable2.DAO;
 
 import project.deliverable2.Exceptions.DAOException;
-import project.deliverable2.DTO.Menu;
+import project.deliverable2.DTO.Menu2;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,12 +9,12 @@ import java.util.List;
 
 public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface{
     @Override
-    public List<Menu> findAllUsers() throws DAOException
+    public List<Menu2> findAllUsers() throws DAOException
     {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
-        List<Menu> usersList = new ArrayList<>();
+        List<Menu2> usersList = new ArrayList<>();
 
         try
         {
@@ -34,7 +34,7 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface{
                 int quantity = resultSet.getInt("QUANTITY");
                 double price = resultSet.getDouble("PRICE");
 
-                Menu m = new Menu(menuID, name, dishSize, quantity, price);
+                Menu2 m = new Menu2(menuID, name, dishSize, quantity, price);
                 usersList.add(m);
             }
         } catch (SQLException e)
@@ -65,12 +65,12 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface{
     }
 
     @Override
-    public Menu findMenuByID(int menu_id) throws DAOException
+    public Menu2 findMenuByID(int menu_id) throws DAOException
     {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Menu menu = null;
+        Menu2 menu = null;
         try
         {
             connection = this.getConnection();
@@ -87,7 +87,7 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface{
                 String dishSize = resultSet.getString("DISH_SIZE");
                 int quantity = resultSet.getInt("QUANTITY");
                 double price = resultSet.getDouble("PRICE");
-                menu = new Menu(menuId, name, dishSize, quantity, price);
+                menu = new Menu2(menuId, name, dishSize, quantity, price);
             }
         } catch (SQLException e)
         {

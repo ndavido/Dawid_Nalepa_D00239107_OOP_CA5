@@ -1,14 +1,13 @@
 package project.deliverable2;
 
 import project.deliverable2.Exceptions.DAOException;
-import project.deliverable2.DTO.Menu;
+import project.deliverable2.DTO.Menu2;
 import project.deliverable2.DAO.MenuDAOInterface;
 import project.deliverable2.DAO.MySqlMenuDAO;
+import project.deliverable2.DTO.CompareDishNameQuantity;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class App {
     public static void main(String[] args){
@@ -29,7 +28,8 @@ public class App {
         final int DISPLAY_BY_ID = 2;
         final int ADD_MENU_DISH = 3;
         final int DELETE_MENU_DISH = 4;
-        final int EXIT = 5;
+        final int SHOW_MENU_USING_MENU = 5;
+        final int EXIT = 6;
 
         MenuDAOInterface IMenuDao = new MySqlMenuDAO();
 
@@ -40,7 +40,13 @@ public class App {
         int option = 0;
         do {
             System.out.println("\n=================================================");
-            System.out.println("(1)Display Menu\n(2)Find Menu Item by ID\n(3)Add Dish to Menu\n(4)Delete Dish from Menu by ID\n(5)Exit");
+            System.out.println("(1)Display Menu\n" +
+                               "(2)Find Menu Item by ID\n" +
+                               "(3)Add Dish to Menu\n" +
+                               "(4)Delete Dish from Menu by ID\n" +
+                               "(5)Filter Menu Orders According to Name and Quantity\n" +
+                               "(6)Exit");
+
             System.out.print("\nYour Choice: ");
 
             try {
@@ -50,9 +56,9 @@ public class App {
                 switch (option) {
                     case DISPLAY_MENU:
                         System.out.println("Showing all Menu options\n");
-                        List<Menu> menus = null;
+                        List<Menu2> menus = IMenuDao.findAllUsers();
 
-                        displayMenu(IMenuDao, menus);
+                        displayMenu(menus);
                         break;
                     case DISPLAY_BY_ID:
                         System.out.println("Showing Menu option by ID\n");
@@ -68,6 +74,15 @@ public class App {
                         System.out.println("Showing Delete Option\n");
 
                         deleteDishByID(IMenuDao);
+                        break;
+                    case SHOW_MENU_USING_MENU:
+                        System.out.println("Showing Menu Orders filtered by price\n");
+
+                        List<Menu2> filteredMenus = IMenuDao.findAllUsers();
+
+                        Collections.sort(filteredMenus, new CompareDishNameQuantity() );
+
+                        displayMenu(filteredMenus);
                         break;
                     case EXIT:
                         break;
@@ -87,28 +102,22 @@ public class App {
         System.out.println("\nExiting Main Menu, goodbye.");
     }
 
-    public List<Menu> displayMenu(MenuDAOInterface IMenuDao, List<Menu> menus) throws DAOException {
-        try {
-            menus = IMenuDao.findAllUsers();
-
-            if (menus.isEmpty())
-                System.out.println("There is no Menu");
-            else {
-                for (Menu menu : menus)
-                    System.out.println(menu.toString());
-            }
-        }catch (DAOException e) {
-            e.printStackTrace();
+    public List<Menu2> displayMenu(List<Menu2> menus) {
+        if (menus.isEmpty())
+            System.out.println("There is no Menu");
+        else {
+            for (Menu2 menu : menus)
+                System.out.println(menu.toString());
         }
         return menus;
     }
 
-    public Menu displayMenuByID(MenuDAOInterface IMenuDao) throws DAOException {
+    public Menu2 displayMenuByID(MenuDAOInterface IMenuDao) throws DAOException {
         Scanner kb = new Scanner(System.in);
         System.out.print("Please select an item searching by ID: ");
         int menu_id = kb.nextInt();
 
-        Menu menu = IMenuDao.findMenuByID(menu_id);
+        Menu2 menu = IMenuDao.findMenuByID(menu_id);
 
         if (menu != null) // null returned if userid and password not valid
             System.out.println("Menu item found: " + menu);
@@ -136,7 +145,7 @@ public class App {
     public void deleteDishByID(MenuDAOInterface IMenuDao) throws DAOException {
         Scanner kb = new Scanner(System.in);
 
-        System.out.print("\nQuantity: ");
+        System.out.print("Enter ID of Item you want to delete: ");
         int menu_id = kb.nextInt();
 
         IMenuDao.deleteMenuDishByID(menu_id);

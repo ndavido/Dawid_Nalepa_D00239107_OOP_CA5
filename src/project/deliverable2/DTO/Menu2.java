@@ -2,7 +2,7 @@ package project.deliverable2.DTO;
 
 import java.util.Objects;
 
-public class Menu {
+public class Menu2 {
 
     private int iD;
     private String name;
@@ -10,7 +10,7 @@ public class Menu {
     private int quantity;
     private double price;
 
-    public Menu(int id, String name, String dishSize, int quantity, double price)
+    public Menu2(int id, String name, String dishSize, int quantity, double price)
     {
         this.iD = id;
         this.name = name;
@@ -44,7 +44,7 @@ public class Menu {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Menu menu = (Menu) o;
+        Menu2 menu = (Menu2) o;
         return iD == menu.iD && quantity == menu.quantity && Double.compare(menu.price, price) == 0 && name.equals(menu.name) && dishSize.equals(menu.dishSize);
     }
 

@@ -1,8 +1,5 @@
 package project.deliverable1;
 
-import project.deliverable1.Menu;
-import project.deliverable1.SortType;
-
 import java.util.Comparator;
 
 public class dishNameComparator implements Comparator<Menu>{

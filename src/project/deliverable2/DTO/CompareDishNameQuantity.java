@@ -1,11 +1,11 @@
-package project.deliverable1;
+package project.deliverable2.DTO;
 
 import java.util.Comparator;
 
-public class CompareDishNameQuantity implements Comparator<Menu> {
+public class CompareDishNameQuantity implements Comparator<Menu2> {
 
     @Override
-    public int compare(Menu m1, Menu m2){
+    public int compare(Menu2 m1, Menu2 m2){
         if(m1.getName().equalsIgnoreCase(m2.getName())){
             return m1.getQuantity() - m2.getQuantity();
         }
