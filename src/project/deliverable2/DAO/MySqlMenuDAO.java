@@ -153,7 +153,7 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface{
 
             ps.setInt(1, menu_id);
 
-            ps.executeUpdate();  // will INSERT a new row
+            ps.executeUpdate();  // will DELETE a new row
 
         } catch (SQLException ex) {
             System.out.println("Failed to connect to database - check MySQL is running and that you are using the correct database details");
