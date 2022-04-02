@@ -7,8 +7,6 @@ import project.deliverable2.DAO.MySqlMenuDAO;
 import project.deliverable2.DTO.CompareDishNameQuantity;
 
 import java.io.IOException;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import java.util.*;
 
 public class App {
@@ -32,7 +30,8 @@ public class App {
         final int DELETE_MENU_DISH = 4;
         final int SHOW_FILTERED_MENU = 5;
         final int SHOW_MENU_AS_JSON = 6;
-        final int EXIT = 7;
+        final int FIND_MENU_ORDER_BY_ID_FROM_JSON = 7;
+        final int EXIT = 8;
 
         MenuDAOInterface IMenuDao = new MySqlMenuDAO();
 
@@ -50,14 +49,15 @@ public class App {
                                "(4)Delete Dish from Menu by ID\n" +
                                "(5)Filter Menu Orders According to Name and Quantity\n" +
                                "(6)Show Menu as a JSON string\n" +
-                               "(7)Exit");
+                               "(7)Find Menu Item by ID from JSON string\n" +
+                               "(8)Exit");
 
             System.out.print("\nYour Choice: ");
 
             try {
                 String usersInput = keyboard.nextLine();
                 option = Integer.parseInt(usersInput);
-                List<Menu2> menus = IMenuDao.findAllUsers();
+                List<Menu2> menus = IMenuDao.findAllMenu();
                 System.out.println("=================================================\n");
                 switch (option) {
                     case DISPLAY_MENU:
@@ -82,19 +82,33 @@ public class App {
                     case SHOW_FILTERED_MENU:
                         System.out.println("Showing Menu Orders filtered by price\n");
 
-                        Collections.sort(menus, new CompareDishNameQuantity() );
+                        Collections.sort(menus, new CompareDishNameQuantity());
 
                         displayMenu(menus);
                         break;
                     case SHOW_MENU_AS_JSON:
                         System.out.println("Showing Menu as a JSON string\n");
 
-                        Gson gsonParser = new Gson();
-
-                        String menusJsonString = gsonParser.toJson(menus);
+                        String menusJsonString = IMenuDao.findAllMenuJson();
 
                         System.out.println(menusJsonString);
 
+                        break;
+                    case FIND_MENU_ORDER_BY_ID_FROM_JSON:
+                        System.out.println("Finding Menu Item by ID from a JSON string\n");
+
+                        Scanner kb = new Scanner(System.in);
+                        System.out.print("Please select an item searching by ID: ");
+                        int menu_id = kb.nextInt();
+
+                        String menu = IMenuDao.findMenuByIDJson(menu_id);
+
+                        if (menu != null) {
+                            System.out.println("Menu item found: " + menu);
+                        }
+                        else {
+                            System.out.println("Menu item with such ID not found");
+                        }
                         break;
                     case EXIT:
                         break;
@@ -144,10 +158,13 @@ public class App {
 
         System.out.print("Dishes name: ");
         String dishName = kb.nextLine();
+
         System.out.print("\nDish Size: ");
         String dishSize = kb.nextLine();
+
         System.out.print("\nQuantity: ");
         int quantity = kb.nextInt();
+
         System.out.print("\nPrice: ");
         double price = kb.nextDouble();
 

@@ -55,12 +55,10 @@ public class Menu2 {
 
     @Override
     public String toString() {
-        return "Menu{" +
-                "iD=" + iD +
-                ", name='" + name + '\'' +
-                ", dishSize='" + dishSize + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                '}';
+        return  "ID = " + iD +
+                ", NAME = '" + name + '\'' +
+                ", DISH SIZE = '" + dishSize + '\'' +
+                ", QUANTITY = " + quantity +
+                ", PRICE = " + price;
     }
 }
