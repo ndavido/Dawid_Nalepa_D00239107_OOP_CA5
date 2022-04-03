@@ -1,6 +1,7 @@
 package project.deliverable2.DAO;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import project.deliverable2.Exceptions.DAOException;
 import project.deliverable2.DTO.Menu2;
 
@@ -190,7 +191,7 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface{
                 Menu2 m = new Menu2(menuID, name, dishSize, quantity, price);
                 usersList.add(m);
             }
-            Gson gsonParser = new Gson();
+            Gson gsonParser = new GsonBuilder().setPrettyPrinting().create();
 
             menusJsonString = gsonParser.toJson(usersList);
 
@@ -237,7 +238,7 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface{
                 double price = resultSet.getDouble("PRICE");
                 menu = new Menu2(menuId, name, dishSize, quantity, price);
             }
-            Gson gsonParser = new Gson();
+            Gson gsonParser = new GsonBuilder().setPrettyPrinting().create();
             menusJsonString = gsonParser.toJson(menu);
         } catch (SQLException e) {
             throw new DAOException("findMenuByID() " + e.getMessage());
