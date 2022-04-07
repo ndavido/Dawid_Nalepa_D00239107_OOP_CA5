@@ -1,9 +1,10 @@
-package project.deliverable2.DAO;
+package project.Part3.DAO;
+
+import project.Part3.Exceptions.DAOException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import project.deliverable2.Exceptions.DAOException;
 
 public class MySqlDAO {
     public Connection getConnection() throws DAOException

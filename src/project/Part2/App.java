@@ -1,10 +1,10 @@
-package project.deliverable2;
+package project.Part2;
 
-import project.deliverable2.Exceptions.DAOException;
-import project.deliverable2.DTO.Menu2;
-import project.deliverable2.DAO.MenuDAOInterface;
-import project.deliverable2.DAO.MySqlMenuDAO;
-import project.deliverable2.DTO.CompareDishNameQuantity;
+import project.Part2.Exceptions.DAOException;
+import project.Part2.DTO.Menu2;
+import project.Part2.DAO.MenuDAOInterface;
+import project.Part2.DAO.MySqlMenuDAO;
+import project.Part2.DTO.CompareDishNameQuantity;
 
 import java.io.IOException;
 import java.util.*;

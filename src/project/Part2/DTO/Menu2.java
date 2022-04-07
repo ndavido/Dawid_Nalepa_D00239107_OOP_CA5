@@ -1,4 +1,4 @@
-package project.deliverable2.DTO;
+package project.Part2.DTO;
 
 import java.util.Objects;
 

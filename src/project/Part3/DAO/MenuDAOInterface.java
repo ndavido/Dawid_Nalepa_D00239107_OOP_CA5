@@ -1,14 +1,13 @@
-package project.deliverable2.DAO;
+package project.Part3.DAO;
 
-import project.deliverable2.DTO.Menu2;
-import project.deliverable2.Exceptions.DAOException;
+import project.Part3.Exceptions.DAOException;
+import project.Part3.DTO.Menu3;
 import java.util.List;
 
 public interface MenuDAOInterface {
+    public List<Menu3> findAllMenu() throws DAOException;
 
-    public List<Menu2> findAllMenu() throws DAOException;
-
-    public Menu2 findMenuByID(int menu_id) throws DAOException;
+    public Menu3 findMenuByID(int menu_id) throws DAOException;
 
     public void addMenuDish( String name, String dishSize, int quantity, double price) throws DAOException;
 

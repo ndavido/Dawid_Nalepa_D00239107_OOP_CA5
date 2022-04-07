@@ -1,9 +1,9 @@
-package project.deliverable2.DAO;
+package project.Part2.DAO;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import project.deliverable2.Exceptions.DAOException;
-import project.deliverable2.DTO.Menu2;
+import project.Part2.Exceptions.DAOException;
+import project.Part2.DTO.Menu2;
 
 import java.sql.*;
 import java.util.ArrayList;
