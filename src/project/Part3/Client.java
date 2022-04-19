@@ -3,9 +3,7 @@ package project.Part3;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import project.Part3.DAO.*;
 import project.Part3.DTO.*;
-import project.Part3.Exceptions.DAOException;
 
 import java.util.*;
 import java.io.IOException;
@@ -27,8 +25,21 @@ public class Client
 
     public void start()
     {
+        final String DISPLAY_MENU = "1";
+        final String DISPLAY_BY_ID = "2";
+        final String ADD_MENU_DISH = "3";
+        final String DELETE_MENU_DISH = "4";
+        final String SHOW_FILTERED_MENU = "5";
+        final String EXIT = "6";
+
+        System.out.println("\n=================================================");
+        System.out.println("===============  Restaurant Menu  ===============");
+        System.out.println("=================================================");
+
         Gson gsonParser = new Gson();
         Scanner in = new Scanner(System.in);
+        boolean keep_looping = true;
+
         try {
             Socket socket = new Socket("localhost", 8080);  // connect to server socket
             System.out.println("Client: Port# of this client : " + socket.getLocalPort());
@@ -38,41 +49,28 @@ public class Client
             Scanner socketReader = new Scanner(socket.getInputStream());  // wait for, and retrieve the reply
             OutputStream os = socket.getOutputStream();
             PrintWriter socketWriter = new PrintWriter(os, true);   // true => auto flush buffers
-            final String DISPLAY_MENU = "1";
-            final String DISPLAY_BY_ID = "2";
-            final String ADD_MENU_DISH = "3";
-            final String DELETE_MENU_DISH = "4";
-            final String SHOW_FILTERED_MENU = "5";
-            final String EXIT = "6";
 
-            System.out.println("\n=================================================");
-            System.out.println("===============  Restaurant Menu  ===============");
-            System.out.println("=================================================");
-
-
-            boolean keep_looping = true;
             while(keep_looping == true) {
-                System.out.println("\n=================================================");
+                System.out.println("\n=================================================\n");
                 System.out.println("(1)Display Menu\n" +
-                        "(2)Find Menu Item by ID\n" +
-                        "(3)Add Dish to Menu\n" +
-                        "(4)Delete Dish from Menu by ID\n" +
-                        "(5)Filter Menu Orders According to Name and Quantity\n" +
-                        "(6)Exit");
+                                   "(2)Find Menu Item by ID\n" +
+                                   "(3)Add Dish to Menu\n" +
+                                   "(4)Delete Dish from Menu by ID\n" +
+                                   "(5)Filter Menu Orders According to Name and Quantity\n" +
+                                   "(6)Exit");
                 System.out.print("\nYour Choice: ");
-                String command = in.nextLine();
-
+                String command = in.next();
+                System.out.println("\n=================================================\n");
                 socketWriter.println(command);
                 try {
-                    System.out.println("=================================================\n");
                     switch (command) {
+
                         case DISPLAY_MENU:
                             System.out.println("Showing all Menu options\n");
 
-                            String displayMenu = socketReader.nextLine();
-                            Type menuListType = new TypeToken<ArrayList<Menu3>>(){}.getType();
-                            List<Menu3> allMenu = gsonParser.fromJson(displayMenu, menuListType);
-                            for (Menu3 menu : allMenu) {
+                            List<Menu3> displayAll = display(socketReader, gsonParser);
+
+                            for (Menu3 menu : displayAll) {
                                 System.out.println(menu);
                             }
 
@@ -88,26 +86,27 @@ public class Client
 
                             break;
                         case ADD_MENU_DISH:
+                            Scanner kb = new Scanner(System.in);
                             System.out.println("Showing Add Option\n");
 
                             System.out.print("Dishes name: ");
-                            String dishName = in.nextLine();
+                            String dishName = kb.nextLine();
                             socketWriter.println(dishName);
 
                             System.out.print("\nDish Size: ");
-                            String dishSize = in.nextLine();
+                            String dishSize = kb.nextLine();
                             socketWriter.println(dishSize);
 
                             System.out.print("\nQuantity: ");
-                            int quantity = in.nextInt();
+                            int quantity = kb.nextInt();
                             socketWriter.println(quantity);
 
                             System.out.print("\nPrice: ");
-                            double price = in.nextDouble();
+                            double price = kb.nextDouble();
                             socketWriter.println(price);
 
                             String orderAdded = socketReader.nextLine();
-                            System.out.println("Client message: Response from server: \"" + orderAdded + "\"");
+                            System.out.println("Response from server: \"" + orderAdded + "\"");
 
                             break;
                         case DELETE_MENU_DISH:
@@ -117,21 +116,19 @@ public class Client
                             int delete = in.nextInt();
                             socketWriter.println(delete);
                             String deletedID = socketReader.nextLine();
-                            System.out.println("Client message: Response from server: \"" + deletedID + "\"");
+                            System.out.println("Response from server: \"" + deletedID + "\"");
 
                             break;
                         case SHOW_FILTERED_MENU:
                             System.out.println("Showing Menu Orders filtered by price\n");
 
-                            String filteredMenu = socketReader.nextLine();
-                            Type filteredMenuListType = new TypeToken<ArrayList<Menu3>>(){}.getType();
-                            List<Menu3> allFilteredMenu = gsonParser.fromJson(filteredMenu, filteredMenuListType);
-                            Collections.sort(allFilteredMenu, new CompareDishNameQuantity());
-//
-                            for (Menu3 menu : allFilteredMenu) {
+                            List<Menu3> displayAllFiltered = display(socketReader, gsonParser);
+
+                            Collections.sort(displayAllFiltered, new CompareDishNameQuantity());
+
+                            for (Menu3 menu : displayAllFiltered) {
                                 System.out.println(menu);
                             }
-//                            displayMenu(menus);
                             break;
                         case EXIT:
                             keep_looping = false;
@@ -140,7 +137,7 @@ public class Client
                             socket.close();
                             break;
                         default:
-                            System.out.print("Invalid option - please enter number in range");
+                            System.out.println("Invalid option - please enter number in range");
                             break;
                     }
 
@@ -149,8 +146,17 @@ public class Client
                     System.out.println("Invalid option - please enter number in range");
                 }
             }
-        } catch (IOException e) {
-            System.out.println("Client message: IOException: "+e);
+        } catch (IOException | JsonSyntaxException e) {
+            System.out.println("Client message: IOException: " + e);
         }
+    }
+
+    public List<Menu3> display(Scanner socketReader, Gson gsonParser){
+
+        String displayMenu = socketReader.nextLine();
+        Type menuListType = new TypeToken<ArrayList<Menu3>>(){}.getType();
+        List<Menu3> allMenu = gsonParser.fromJson(displayMenu, menuListType);
+
+        return allMenu;
     }
 }

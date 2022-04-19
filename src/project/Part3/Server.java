@@ -1,7 +1,6 @@
 package project.Part3;
 
 import project.Part3.DAO.*;
-import project.Part3.DTO.*;
 import project.Part3.Exceptions.DAOException;
 
 
@@ -12,8 +11,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.time.LocalTime;
-import java.util.Scanner;
 
 public class Server
 {
@@ -122,23 +119,6 @@ public class Server
                         String delete = socketReader.readLine();
                         IMenuDao.deleteMenuDishByID(Integer.parseInt(delete));
                         socketWriter.println("Order has been deleted");
-                    }
-                    else if (message.startsWith("Subtract")){
-                        String[] tokens = message.split(" ");
-                        int number1 = Integer.parseInt(tokens[1]);
-                        int number2 = Integer.parseInt(tokens[2]);
-                        int result = number1 - number2;
-
-                        socketWriter.println(result);
-                    }
-                    else if (message.startsWith("Multiply")) {
-                        String[] tokens = message.split(" ");
-                        int number1 = Integer.parseInt(tokens[1]);
-                        int number2 = Integer.parseInt(tokens[2]);
-                        int result = number1 * number2;
-
-                        socketWriter.println(result);
-                        socket.close();
                     }
                     else
                     {

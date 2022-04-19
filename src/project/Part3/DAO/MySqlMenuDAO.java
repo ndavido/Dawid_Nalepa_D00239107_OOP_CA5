@@ -1,11 +1,8 @@
 package project.Part3.DAO;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import project.Part3.DTO.Menu3;
 import project.Part3.Exceptions.DAOException;
-import project.Part3.DAO.MenuDAOInterface;
-import project.Part3.DAO.MySqlDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,53 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface {
-
-    @Override
-    public void addMenuDish( String name, String dishSize, int quantity, double price) throws DAOException{
-
-        Connection connection = null;
-        PreparedStatement ps = null;
-        try
-        {
-            connection = this.getConnection();
-
-            String query = "INSERT INTO oop_ca4.menu VALUES (null, ?, ?, ?, ?)";
-            ps = connection.prepareStatement(query);
-
-            ps.setString(1, name);
-            ps.setString(2, dishSize);
-            ps.setInt(3, quantity);
-            ps.setDouble(4, price);
-
-            ps.executeUpdate();  // will INSERT a new row
-
-        } catch (SQLException ex) {
-            System.out.println("Failed to connect to database - check MySQL is running and that you are using the correct database details");
-            ex.printStackTrace();
-        }
-    }
-
-    @Override
-    public void deleteMenuDishByID(int menu_id) throws DAOException{
-
-        Connection connection = null;
-        PreparedStatement ps = null;
-        try
-        {
-            connection = this.getConnection();
-
-            String query = "DELETE FROM oop_ca4.menu WHERE MENU_ID = ?";
-            ps = connection.prepareStatement(query);
-
-            ps.setInt(1, menu_id);
-
-            ps.executeUpdate();  // will DELETE a new row
-
-        } catch (SQLException ex) {
-            System.out.println("Failed to connect to database - check MySQL is running and that you are using the correct database details");
-            ex.printStackTrace();
-        }
-    }
 
     @Override
     public String findAllMenuJson() throws DAOException {
@@ -157,5 +107,52 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface {
         }
 
         return menusJsonString;
+    }
+
+    @Override
+    public void addMenuDish( String name, String dishSize, int quantity, double price) throws DAOException{
+
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "INSERT INTO oop_ca4.menu VALUES (null, ?, ?, ?, ?)";
+            ps = connection.prepareStatement(query);
+
+            ps.setString(1, name);
+            ps.setString(2, dishSize);
+            ps.setInt(3, quantity);
+            ps.setDouble(4, price);
+
+            ps.executeUpdate();  // will INSERT a new row
+
+        } catch (SQLException ex) {
+            System.out.println("Failed to connect to database - check MySQL is running and that you are using the correct database details");
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteMenuDishByID(int menu_id) throws DAOException{
+
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "DELETE FROM oop_ca4.menu WHERE MENU_ID = ?";
+            ps = connection.prepareStatement(query);
+
+            ps.setInt(1, menu_id);
+
+            ps.executeUpdate();  // will DELETE a new row
+
+        } catch (SQLException ex) {
+            System.out.println("Failed to connect to database - check MySQL is running and that you are using the correct database details");
+            ex.printStackTrace();
+        }
     }
 }
