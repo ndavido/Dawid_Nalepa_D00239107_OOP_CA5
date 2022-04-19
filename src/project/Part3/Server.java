@@ -1,5 +1,10 @@
 package project.Part3;
 
+import project.Part3.DAO.*;
+import project.Part3.DTO.*;
+import project.Part3.Exceptions.DAOException;
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +13,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalTime;
+import java.util.Scanner;
 
 public class Server
 {
@@ -84,34 +90,38 @@ public class Server
             String message;
             try
             {
+                MenuDAOInterface IMenuDao = new MySqlMenuDAO();
                 while ((message = socketReader.readLine()) != null)
                 {
                     System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + message);
 
-                    if (message.startsWith("Time"))
+                    if (message.startsWith("1") || message.startsWith("5"))
                     {
-                        LocalTime time =  LocalTime.now();
-                        socketWriter.println(time);  // sends current time to client
+                        String showMenu = IMenuDao.findAllMenuJson();
+                        socketWriter.println(showMenu);  // sends current time to client
                     }
-                    else if (message.startsWith("Echo"))
+                    else if (message.startsWith("2"))
                     {
-                        message = message.substring(5); // strip off the 'Echo ' part
-                        socketWriter.println(message);  // send message to client
+                        String menu_id = socketReader.readLine();
+                        String menu = IMenuDao.findMenuByIDJson(Integer.parseInt(menu_id));
+                        if (menu != null) // null returned if userid and password not valid
+                            socketWriter.println("Menu item found: " + menu);
+                        else
+                            socketWriter.println("Menu item with such ID not found");
                     }
-                    else if (message.startsWith("Triple")){
-                        String[] tokens = message.split(" ");
-                        int number = Integer.parseInt(tokens[1]);
-                        number *= 3;
+                    else if (message.startsWith("3")){
+                        String dishName = socketReader.readLine();
+                        String dishSize = socketReader.readLine();
+                        String quantity = socketReader.readLine();
+                        String price = socketReader.readLine();
 
-                        socketWriter.println(number);
+                        IMenuDao.addMenuDish(dishName, dishSize, Integer.parseInt(quantity), Double.parseDouble(price));
+                        socketWriter.println("Order has been added");
                     }
-                    else if (message.startsWith("Add")){
-                        String[] tokens = message.split(" ");
-                        int number1 = Integer.parseInt(tokens[1]);
-                        int number2 = Integer.parseInt(tokens[2]);
-                        int result = number1 + number2;
-
-                        socketWriter.println(result);
+                    else if (message.startsWith("4")){
+                        String delete = socketReader.readLine();
+                        IMenuDao.deleteMenuDishByID(Integer.parseInt(delete));
+                        socketWriter.println("Order has been deleted");
                     }
                     else if (message.startsWith("Subtract")){
                         String[] tokens = message.split(" ");
@@ -121,21 +131,14 @@ public class Server
 
                         socketWriter.println(result);
                     }
-                    else if (message.startsWith("Multiply")){
+                    else if (message.startsWith("Multiply")) {
                         String[] tokens = message.split(" ");
                         int number1 = Integer.parseInt(tokens[1]);
                         int number2 = Integer.parseInt(tokens[2]);
                         int result = number1 * number2;
 
                         socketWriter.println(result);
-                    }
-                    else if (message.startsWith("Divide")){
-                        String[] tokens = message.split(" ");
-                        double number1 = Integer.parseInt(tokens[1]);
-                        double number2 = Integer.parseInt(tokens[2]);
-                        double result = number1 / number2;
-
-                        socketWriter.println(result);
+                        socket.close();
                     }
                     else
                     {
@@ -148,6 +151,8 @@ public class Server
             } catch (IOException ex)
             {
                 ex.printStackTrace();
+            } catch (DAOException e) {
+                e.printStackTrace();
             }
             System.out.println("Server: (ClientHandler): Handler for Client " + clientNumber + " is terminating .....");
         }

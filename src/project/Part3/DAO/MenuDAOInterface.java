@@ -5,9 +5,6 @@ import project.Part3.DTO.Menu3;
 import java.util.List;
 
 public interface MenuDAOInterface {
-    public List<Menu3> findAllMenu() throws DAOException;
-
-    public Menu3 findMenuByID(int menu_id) throws DAOException;
 
     public void addMenuDish( String name, String dishSize, int quantity, double price) throws DAOException;
 
