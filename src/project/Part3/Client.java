@@ -58,7 +58,7 @@ public class Client
                                    "(3)Add Dish to Menu\n" +
                                    "(4)Delete Dish from Menu by ID\n" +
                                    "(5)Filter Menu Orders According to Name and Quantity\n" +
-                                   "(6)Find Orders that have the most Quantity" +
+                                   "(6)Find Orders that have the most Quantity\n" +
                                    "(7)Exit");
                 System.out.print("\nYour Choice: ");
                 String command = in.next();
@@ -87,7 +87,7 @@ public class Client
                             int menu_id = in.nextInt();
                             socketWriter.println(menu_id);
                             String displayByID = socketReader.nextLine();
-                            System.out.println("Response from server: \"" + displayByID + "\"");
+                            System.out.println(displayByID);
 
                             break;
                         case ADD_MENU_DISH:
@@ -141,9 +141,10 @@ public class Client
 
                             break;
                         case FIND_QUANTITY_GREATER_THAN:
+                            System.out.println("Showing Menu Orders that have the most Quantity\n");
 
                             String highestQuantity = socketReader.nextLine();
-                            System.out.println("Response from server: \"" + highestQuantity + "\"");
+                            System.out.println(highestQuantity);
 
                             break;
                         case EXIT:
