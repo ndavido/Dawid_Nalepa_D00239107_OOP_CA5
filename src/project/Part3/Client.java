@@ -30,7 +30,8 @@ public class Client
         final String ADD_MENU_DISH = "3";
         final String DELETE_MENU_DISH = "4";
         final String SHOW_FILTERED_MENU = "5";
-        final String EXIT = "6";
+        final String FIND_QUANTITY_GREATER_THAN = "6";
+        final String EXIT = "7";
 
         System.out.println("\n=================================================");
         System.out.println("===============  Restaurant Menu  ===============");
@@ -57,7 +58,8 @@ public class Client
                                    "(3)Add Dish to Menu\n" +
                                    "(4)Delete Dish from Menu by ID\n" +
                                    "(5)Filter Menu Orders According to Name and Quantity\n" +
-                                   "(6)Exit");
+                                   "(6)Find Orders that have the most Quantity" +
+                                   "(7)Exit");
                 System.out.print("\nYour Choice: ");
                 String command = in.next();
                 System.out.println("\n=================================================\n");
@@ -85,7 +87,7 @@ public class Client
                             int menu_id = in.nextInt();
                             socketWriter.println(menu_id);
                             String displayByID = socketReader.nextLine();
-                            System.out.println("Client message: Response from server: \"" + displayByID + "\"");
+                            System.out.println("Response from server: \"" + displayByID + "\"");
 
                             break;
                         case ADD_MENU_DISH:
@@ -136,6 +138,12 @@ public class Client
                                 System.out.printf("| %-2d | %-22s | %-9s | %-8d | € %-6.2f |\n",menu.getID(),menu.getName(),menu.getDishSize(),menu.getQuantity(),menu.getPrice());
                             }
                             System.out.println("-----------------------------------------------------------------");
+
+                            break;
+                        case FIND_QUANTITY_GREATER_THAN:
+
+                            String highestQuantity = socketReader.nextLine();
+                            System.out.println("Response from server: \"" + highestQuantity + "\"");
 
                             break;
                         case EXIT:

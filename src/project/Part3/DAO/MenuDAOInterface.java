@@ -13,4 +13,6 @@ public interface MenuDAOInterface {
     public String findAllMenuJson() throws DAOException;
 
     public String findMenuByIDJson(int menu_id) throws DAOException;
+
+    public String findQuantityGreaterThanJson() throws DAOException;
 }

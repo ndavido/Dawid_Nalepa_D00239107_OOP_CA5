@@ -18,7 +18,7 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
-        List<Menu3> usersList = new ArrayList<>();
+        List<Menu3> orderList = new ArrayList<>();
         String menusJsonString = "";
         try {
             //Get connection object using the methods in the super class (MySqlDao.java)...
@@ -37,11 +37,11 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface {
                 double price = resultSet.getDouble("PRICE");
 
                 Menu3 m = new Menu3(menuID, name, dishSize, quantity, price);
-                usersList.add(m);
+                orderList.add(m);
             }
             Gson gsonParser = new Gson();
 
-            menusJsonString = gsonParser.toJson(usersList);
+            menusJsonString = gsonParser.toJson(orderList);
 
         } catch (SQLException e) {
             throw new DAOException("findAllMenuResultSet() " + e.getMessage());
@@ -66,46 +66,48 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface {
     @Override
     public String findMenuByIDJson(int menu_id) throws DAOException {
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        PreparedStatement ps = null;
         ResultSet resultSet = null;
-        Menu3 menu = null;
+        List<Menu3> orderList = new ArrayList<>();
         String menusJsonString = "";
         try {
             connection = this.getConnection();
 
             String query = "SELECT * FROM MENU WHERE MENU_ID = ?";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, menu_id);
-
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                int menuId = resultSet.getInt("MENU_ID");
+            ps = connection.prepareStatement(query);
+            ps.setInt(1,menu_id);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                int menuID = resultSet.getInt("MENU_ID");
                 String name = resultSet.getString("NAME");
                 String dishSize = resultSet.getString("DISH_SIZE");
                 int quantity = resultSet.getInt("QUANTITY");
                 double price = resultSet.getDouble("PRICE");
-                menu = new Menu3(menuId, name, dishSize, quantity, price);
+
+                Menu3 m = new Menu3(menuID, name, dishSize, quantity, price);
+                orderList.add(m);
             }
             Gson gsonParser = new Gson();
-            menusJsonString = gsonParser.toJson(menu);
+
+            menusJsonString = gsonParser.toJson(orderList);
+
         } catch (SQLException e) {
-            throw new DAOException("findMenuByID() " + e.getMessage());
+            throw new DAOException("findAllMenuResultSet() " + e.getMessage());
         } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
                 }
-                if (preparedStatement != null) {
-                    preparedStatement.close();
+                if (ps != null) {
+                    ps.close();
                 }
                 if (connection != null) {
                     freeConnection(connection);
                 }
             } catch (SQLException e) {
-                throw new DAOException("findMenuByID() " + e.getMessage());
+                throw new DAOException("findAllMenu() " + e.getMessage());
             }
         }
-
         return menusJsonString;
     }
 
@@ -154,5 +156,52 @@ public class MySqlMenuDAO extends MySqlDAO implements MenuDAOInterface {
             System.out.println("Failed to connect to database - check MySQL is running and that you are using the correct database details");
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public String findQuantityGreaterThanJson() throws DAOException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        List<Menu3> usersList = new ArrayList<>();
+        String menusJsonString = "";
+        try {
+            connection = this.getConnection();
+
+            String query = "SELECT * FROM MENU WHERE QUANTITY = (SELECT MAX(QUANTITY) FROM MENU);";
+            ps = connection.prepareStatement(query);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                int menuID = resultSet.getInt("MENU_ID");
+                String name = resultSet.getString("NAME");
+                String dishSize = resultSet.getString("DISH_SIZE");
+                int quantity = resultSet.getInt("QUANTITY");
+                double price = resultSet.getDouble("PRICE");
+
+                Menu3 m = new Menu3(menuID, name, dishSize, quantity, price);
+                usersList.add(m);
+            }
+            Gson gsonParser = new Gson();
+
+            menusJsonString = gsonParser.toJson(usersList);
+
+        } catch (SQLException e) {
+            throw new DAOException("findQuantityGreaterThanJson() " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DAOException("findQuantityGreaterThanJson() " + e.getMessage());
+            }
+        }
+        return menusJsonString;     // may be empty
     }
 }

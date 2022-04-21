@@ -120,6 +120,15 @@ public class Server
                         IMenuDao.deleteMenuDishByID(Integer.parseInt(delete));
                         socketWriter.println("Order has been deleted");
                     }
+                    else if (message.startsWith("4")){
+                        String delete = socketReader.readLine();
+                        IMenuDao.deleteMenuDishByID(Integer.parseInt(delete));
+                        socketWriter.println("Order has been deleted");
+                    }
+                    else if (message.startsWith("6")){
+                        String highestQuantity = IMenuDao.findQuantityGreaterThanJson();
+                        socketWriter.println(highestQuantity);
+                    }
                     else
                     {
                         socketWriter.println("I'm sorry I don't understand :(");
