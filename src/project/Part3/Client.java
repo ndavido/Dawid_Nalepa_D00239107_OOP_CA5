@@ -69,10 +69,13 @@ public class Client
                             System.out.println("Showing all Menu options\n");
 
                             List<Menu3> displayAll = display(socketReader, gsonParser);
-
+                            System.out.println("-----------------------------------------------------------------");
+                            System.out.println("| ID |  \t\tName\t\t  | Dish Size | Quantity |  Price   |");
+                            System.out.println("-----------------------------------------------------------------");
                             for (Menu3 menu : displayAll) {
-                                System.out.println(menu);
+                                System.out.printf("| %-2d | %-22s | %-9s | %-8d | € %-6.2f |\n",menu.getID(),menu.getName(),menu.getDishSize(),menu.getQuantity(),menu.getPrice());
                             }
+                            System.out.println("-----------------------------------------------------------------");
 
                             break;
                         case DISPLAY_BY_ID:
@@ -126,9 +129,14 @@ public class Client
 
                             Collections.sort(displayAllFiltered, new CompareDishNameQuantity());
 
+                            System.out.println("-----------------------------------------------------------------");
+                            System.out.println("| ID |  \t\tName\t\t  | Dish Size | Quantity |  Price   |");
+                            System.out.println("-----------------------------------------------------------------");
                             for (Menu3 menu : displayAllFiltered) {
-                                System.out.println(menu);
+                                System.out.printf("| %-2d | %-22s | %-9s | %-8d | € %-6.2f |\n",menu.getID(),menu.getName(),menu.getDishSize(),menu.getQuantity(),menu.getPrice());
                             }
+                            System.out.println("-----------------------------------------------------------------");
+
                             break;
                         case EXIT:
                             keep_looping = false;
