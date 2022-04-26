@@ -105,12 +105,16 @@ public class Server
                         socketWriter.println(menu);
                     }
                     else if (message.startsWith("3")){
-                        String dishName = socketReader.readLine();
-                        String dishSize = socketReader.readLine();
-                        String quantity = socketReader.readLine();
-                        String price = socketReader.readLine();
+                        String addToDatabase = socketReader.readLine();
 
-                        IMenuDao.addMenuDish(dishName, dishSize, Integer.parseInt(quantity), Double.parseDouble(price));
+                        String[] tokens = addToDatabase.split(";");
+
+                        String dishName = tokens[0];
+                        String dishSize = tokens[1];
+                        int quantity = Integer.parseInt(tokens[2]);
+                        double price = Double.parseDouble(tokens[3]);
+
+                        IMenuDao.addMenuDish(dishName, dishSize, quantity,price);
                         socketWriter.println("Order has been added");
                     }
                     else if (message.startsWith("4")){

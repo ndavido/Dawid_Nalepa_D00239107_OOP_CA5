@@ -103,20 +103,18 @@ public class Client
 
                             System.out.print("Dishes name: ");
                             String dishName = kb.nextLine();
-                            socketWriter.println(dishName);
 
                             System.out.print("\nDish Size: ");
                             String dishSize = kb.nextLine();
-                            socketWriter.println(dishSize);
 
                             System.out.print("\nQuantity: ");
                             int quantity = kb.nextInt();
-                            socketWriter.println(quantity);
 
                             System.out.print("\nPrice: ");
                             double price = kb.nextDouble();
-                            socketWriter.println(price);
 
+                            String addToDatabase = dishName + ";" + dishSize + ";" + quantity + ";" + price;
+                            socketWriter.println(addToDatabase);
 
                             String orderAdded = socketReader.nextLine();
                             System.out.println("Response from server: \"" + orderAdded + "\"");
