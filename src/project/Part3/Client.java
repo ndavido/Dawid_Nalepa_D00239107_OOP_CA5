@@ -86,8 +86,15 @@ public class Client
                             System.out.print("Please select an item searching by ID: ");
                             int menu_id = in.nextInt();
                             socketWriter.println(menu_id);
-                            String displayByID = socketReader.nextLine();
-                            System.out.println(displayByID);
+
+                            List<Menu3>displayByID = display(socketReader, gsonParser);
+                            System.out.println("-----------------------------------------------------------------");
+                            System.out.println("| ID |  \t\tName\t\t  | Dish Size | Quantity |  Price   |");
+                            System.out.println("-----------------------------------------------------------------");
+                            for (Menu3 menu : displayByID) {
+                                System.out.printf("| %-2d | %-22s | %-9s | %-8d | € %-6.2f |\n",menu.getID(),menu.getName(),menu.getDishSize(),menu.getQuantity(),menu.getPrice());
+                            }
+                            System.out.println("-----------------------------------------------------------------");
 
                             break;
                         case ADD_MENU_DISH:
@@ -109,6 +116,7 @@ public class Client
                             System.out.print("\nPrice: ");
                             double price = kb.nextDouble();
                             socketWriter.println(price);
+
 
                             String orderAdded = socketReader.nextLine();
                             System.out.println("Response from server: \"" + orderAdded + "\"");
@@ -143,9 +151,17 @@ public class Client
                         case FIND_QUANTITY_GREATER_THAN:
                             System.out.println("Showing Menu Orders that have the most Quantity\n");
 
-                            String highestQuantity = socketReader.nextLine();
-                            System.out.println(highestQuantity);
+//                            String highestQuantity = socketReader.nextLine();
+//                            System.out.println(highestQuantity);
 
+                            List<Menu3>highestQuantity = display(socketReader, gsonParser);
+                            System.out.println("-----------------------------------------------------------------");
+                            System.out.println("| ID |  \t\tName\t\t  | Dish Size | Quantity |  Price   |");
+                            System.out.println("-----------------------------------------------------------------");
+                            for (Menu3 menu : highestQuantity) {
+                                System.out.printf("| %-2d | %-22s | %-9s | %-8d | € %-6.2f |\n",menu.getID(),menu.getName(),menu.getDishSize(),menu.getQuantity(),menu.getPrice());
+                            }
+                            System.out.println("-----------------------------------------------------------------");
                             break;
                         case EXIT:
                             keep_looping = false;

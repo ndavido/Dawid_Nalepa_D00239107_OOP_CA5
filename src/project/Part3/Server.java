@@ -101,10 +101,8 @@ public class Server
                     {
                         String menu_id = socketReader.readLine();
                         String menu = IMenuDao.findMenuByIDJson(Integer.parseInt(menu_id));
-                        if (menu != null) // null returned if userid and password not valid
-                            socketWriter.println("Menu item found: " + menu);
-                        else
-                            socketWriter.println("Menu item with such ID not found");
+
+                        socketWriter.println(menu);
                     }
                     else if (message.startsWith("3")){
                         String dishName = socketReader.readLine();
