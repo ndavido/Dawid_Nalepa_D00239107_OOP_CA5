@@ -17,7 +17,7 @@ INSERT INTO menu VALUES (1, "Mushroom Soup", "Medium",1, 15.99),
                         (5, "Warm Ice-Cream","Large",3,14.99),
                         (6, "Lasagna","Small",1,17.99),
                         (7, "Caesar Salad","Small",1,8.99),
-                        (8, "Chicken Tika Masala","Medium",1,15.99),
+                        (8, "Chicken Tika Masala","Medium",3,15.99),
                         (9, "Smoked Salmon","Small",1,25.99),
                         (10,"Steak","Large",1,59.99);
 
