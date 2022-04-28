@@ -149,9 +149,6 @@ public class Client
                         case FIND_QUANTITY_GREATER_THAN:
                             System.out.println("Showing Menu Orders that have the most Quantity\n");
 
-//                            String highestQuantity = socketReader.nextLine();
-//                            System.out.println(highestQuantity);
-
                             List<Menu3>highestQuantity = display(socketReader, gsonParser);
                             System.out.println("-----------------------------------------------------------------");
                             System.out.println("| ID |  \t\tName\t\t  | Dish Size | Quantity |  Price   |");
