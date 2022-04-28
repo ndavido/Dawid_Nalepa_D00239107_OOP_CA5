@@ -36,4 +36,4 @@ INSERT INTO menu VALUES (1, "Mushroom Soup", "Medium",1, 15.99),
 ALTER TABLE `menu` ADD PRIMARY KEY (`MENU_ID`);
 ALTER TABLE `menu` MODIFY `MENU_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 ```
-![alt text](https://github.com/ndavido/Dawid_Nalepa_D00239107_OOP_CA5/raw/main/READMEimages/Feature_18_OOP_CA4.PNG "Idea")
+![alt text](https://github.com/ndavido/Dawid_Nalepa_D00239107_OOP_CA5/raw/main/OOP_Feature_18_Dawid_Nalepa_SD2b.png "Idea")
